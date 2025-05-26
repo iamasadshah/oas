@@ -18,68 +18,100 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  return (
-    <header>
-      <div className="container">
-        <div className="menus">
-          <Link to={"/"}>
-            <img src={Logo} alt="Logo" />
-          </Link>
-          <nav>
-            <ul className={isOpen ? "display" : ""}>
-              <div className="btn" onClick={() => setIsOpen(false)}>
-                <i className="fas fa-times close-btn"></i>
-              </div>
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    document.body.style.overflow = !isOpen ? "hidden" : "auto";
+  };
 
+  return (
+    <header className="navbar">
+      <div className="navbar-container">
+        <div className="navbar-content">
+          <Link to="/" className="logo-link">
+            <img src={Logo} alt="Company Logo" className="navbar-logo" />
+          </Link>
+
+          <nav className={`navbar-nav ${isOpen ? "active" : ""}`}>
+            <button
+              className="close-menu"
+              onClick={toggleMenu}
+              aria-label="Close menu"
+            >
+              <span className="close-icon"></span>
+            </button>
+
+            <ul className="nav-list">
               {user && (
-                <li>
-                  <NavLink to={"/"}>
-                    <div className="nav-item">
-                      <TbListDetails className="nav-icn" /> Overview
-                    </div>
+                <li className="nav-item">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <TbListDetails className="nav-icon" />
+                    <span>Overview</span>
                   </NavLink>
                 </li>
               )}
 
               {user?.role === "admin" && (
-                <li>
-                  <NavLink to={"/admin"}>
-                    <div className="nav-item">
-                      <MdOutlineAdminPanelSettings className="nav-icn" /> Admin
-                    </div>
+                <li className="nav-item">
+                  <NavLink
+                    to="/admin"
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <MdOutlineAdminPanelSettings className="nav-icon" />
+                    <span>Admin</span>
                   </NavLink>
                 </li>
               )}
 
               {!user ? (
                 <>
-                  <li>
-                    <NavLink to={"/login"}>
-                      <div className="nav-item">
-                        <IoLogInOutline className="nav-icn" /> Login
-                      </div>
+                  <li className="nav-item">
+                    <NavLink
+                      to="/login"
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <IoLogInOutline className="nav-icon" />
+                      <span>Login</span>
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to={"/register"}>
-                      <div className="nav-item">
-                        <HiOutlineUserAdd className="nav-icn" /> Register
-                      </div>
+                  <li className="nav-item">
+                    <NavLink
+                      to="/register"
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <HiOutlineUserAdd className="nav-icon" />
+                      <span>Register</span>
                     </NavLink>
                   </li>
                 </>
               ) : (
-                <li>
-                  <button className="logout-btn" onClick={handleLogout}>
-                    <IoLogOutOutline className="nav-icn" /> Logout
+                <li className="nav-item">
+                  <button className="logout-button" onClick={handleLogout}>
+                    <IoLogOutOutline className="nav-icon" />
+                    <span>Logout</span>
                   </button>
                 </li>
               )}
             </ul>
           </nav>
-          <div className="btn" onClick={() => setIsOpen(true)}>
-            <i className="fas fa-bars menu-btn"></i>
-          </div>
+
+          <button
+            className="menu-toggle"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <span className="menu-icon"></span>
+          </button>
         </div>
       </div>
     </header>
