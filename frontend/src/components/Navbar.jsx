@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import Logo from "../assets/logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { TbListDetails } from "react-icons/tb";
@@ -28,7 +27,11 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-content">
           <Link to="/" className="logo-link">
-            <img src={Logo} alt="Company Logo" className="navbar-logo" />
+            <div className="text-logo">
+              <span className="logo-text">Online</span>
+              <span className="logo-highlight">Attendance</span>
+              <span className="logo-text">System</span>
+            </div>
           </Link>
 
           <nav className={`navbar-nav ${isOpen ? "active" : ""}`}>

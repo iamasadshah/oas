@@ -1,172 +1,541 @@
 .overview-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #ffffff;
+}
+
+.overview-header {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+.overview-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Filter Section */
+.filter-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 250px;
+}
+
+.filter-group label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  margin-left: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234a90e2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+  padding-right: 3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-select:hover {
+  border-color: rgba(74, 144, 226, 0.5);
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Custom Select Dropdown Styling */
+.filter-select option {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select option:hover {
+  background-color: rgba(74, 144, 226, 0.2);
+}
+
+.filter-select option:checked {
+  background-color: rgba(74, 144, 226, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Custom Select Dropdown Animation */
+.filter-select:focus option {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Select Dropdown Container */
+.filter-select-container {
+  position: relative;
+}
+
+.filter-select-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0);
+  transition: box-shadow 0.3s ease;
+}
+
+.filter-select-container:focus-within::after {
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+}
+
+/* Loading State */
+.loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
+  min-height: 200px;
+  gap: 1rem;
 }
 
-.overview-container h2 {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  margin-top: 30px;
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #4a90e2;
+  animation: spin 1s linear infinite;
 }
 
-.filter-container {
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Summary Section */
+.summary-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+}
+
+.summary-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 20px;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.filter-container select {
-  width: 200px;
-  height: 50px;
-  background: transparent;
-  outline: none;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 40px;
-  font-size: 16px;
-  padding: 0 20px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='24' height='24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 20px center;
-  background-size: 15px;
-  cursor: pointer;
+.summary-icon {
+  font-size: 1.5rem;
+  color: #4a90e2;
 }
 
-.input-select {
-  flex: 1;
-  min-width: 0;
-  box-sizing: border-box;
-  background: transparent;
-  outline: none;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 40px;
-  font-size: 16px;
-  padding: 15px 20px 15px 20px;
-  color: #fff;
+.summary-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
 }
 
-.attendance-table {
-  max-height: 400px;
-  overflow-y: auto;
-  max-width: 1400px;
-  width: 100%;
-  border-radius: 8px;
-  padding: 30px 40px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(50px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.attendance-table th,
-.attendance-table td,
-.attendance-detail-table th,
-.attendance-detail-table td {
-  padding: 10px;
-  text-align: center;
-  border: none;
+.summary-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: #e2e8f0;
 }
 
-.attendance-table th,
-.attendance-detail-table th {
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+.summary-content strong {
+  color: #ffffff;
+  font-weight: 600;
 }
 
-.total-days-container {
-  background-color: #f2f2f2;
-  padding: 15px;
-  border-radius: 5px;
+/* Attendance Details Section */
+.attendance-details-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.total-days-container h3 {
-  margin-bottom: 10px;
+.attendance-details-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.total-days-container ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.total-days-container li {
-  font-size: 16px;
-  margin-bottom: 5px;
+.attendance-details-section h3::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 24px;
+  background: #4a90e2;
+  border-radius: 2px;
 }
 
 .attendance-table-container {
-  margin-top: 25px;
-  max-width: 1400px;
-  max-height: 380px;
-  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scrollable-table {
+  max-height: 400px;
+  overflow-y: auto;
   border-radius: 8px;
-  padding: 30px 40px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(50px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 .attendance-detail-table {
-  margin-top: -3%;
-  max-height: 380px;
-  overflow-y: auto;
-  max-width: 1400px;
   width: 100%;
-  padding: 30px 40px;
-  backdrop-filter: blur(50px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #ffffff;
 }
 
-.attendance-table-container .scrollable-table {
-  max-height: 320px;
-  overflow-y: auto;
+.attendance-detail-table th,
+.attendance-detail-table td {
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
 }
 
+.attendance-detail-table th {
+  background: rgba(26, 26, 46, 0.95);
+  font-weight: 600;
+  color: #4a90e2;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.attendance-detail-table th:first-child {
+  border-top-left-radius: 8px;
+  border-left: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.attendance-detail-table th:last-child {
+  border-top-right-radius: 8px;
+  border-right: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.attendance-detail-table th:not(:last-child) {
+  border-right: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.attendance-detail-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.attendance-detail-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.attendance-detail-table td {
+  font-size: 1rem;
+  color: #e2e8f0;
+}
+
+.attendance-detail-table td:first-child {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.status-badge::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  transition: all 0.3s ease;
+}
+
+.status-present {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.status-present::before {
+  background: #2ecc71;
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.4);
+}
+
+.status-absent {
+  background: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+}
+
+.status-absent::before {
+  background: #ff3b30;
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.4);
+}
+
+.status-leave {
+  background: rgba(255, 159, 10, 0.1);
+  color: #ff9f0a;
+  border: 1px solid rgba(255, 159, 10, 0.2);
+}
+
+.status-leave::before {
+  background: #ff9f0a;
+  box-shadow: 0 0 8px rgba(255, 159, 10, 0.4);
+}
+
+.status-no-record {
+  background: rgba(255, 255, 255, 0.05);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-no-record::before {
+  background: #a1a1aa;
+  box-shadow: 0 0 8px rgba(161, 161, 170, 0.4);
+}
+
+/* Scrollbar Styling */
 .scrollable-table::-webkit-scrollbar {
   width: 8px;
 }
 
 .scrollable-table::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
 }
 
 .scrollable-table::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .scrollable-table::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .overview-container {
+    padding: 1.5rem;
+  }
+
+  .summary-section {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
   .overview-container {
-    padding: 10px;
+    padding: 1rem;
+  }
+
+  .overview-header h2 {
+    font-size: 1.75rem;
   }
 
   .filter-container {
     flex-direction: column;
-    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.25rem;
   }
 
-  .filter-container select {
-    width: 100%;
-    margin: 5px 0;
+  .filter-group {
+    min-width: 100%;
   }
 
-  .attendance-table th,
-  .attendance-table td {
-    font-size: 12px;
-    padding: 8px;
+  .filter-select {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
   }
 
-  .total-days-container {
-    padding: 10px;
+  .summary-card {
+    padding: 1.25rem;
+  }
+
+  .summary-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .attendance-details-section {
+    padding: 1.5rem;
+  }
+
+  .attendance-detail-table th,
+  .attendance-detail-table td {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .status-badge {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-container {
+    padding: 0.75rem;
+  }
+
+  .overview-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .summary-section {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .summary-header {
+    gap: 0.75rem;
+  }
+
+  .summary-icon {
+    font-size: 1.25rem;
+  }
+
+  .filter-container {
+    padding: 1rem;
+    gap: 1.25rem;
+  }
+
+  .filter-group label {
+    font-size: 0.9rem;
+  }
+
+  .filter-select {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .attendance-details-section {
+    padding: 1rem;
+  }
+
+  .attendance-detail-table th,
+  .attendance-detail-table td {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .status-badge {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 80px;
   }
 }
