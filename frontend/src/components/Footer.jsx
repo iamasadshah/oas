@@ -9,66 +9,91 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-section">
-          <div className="logo-section">
-            <Link to={"/"}>
-              <img src={LogoFooter} alt="LogoFooter" />
+      <div className="footer-container">
+        <div className="footer-section brand-section">
+          <div className="logo-container">
+            <Link to="/" className="logo-link">
+              <img
+                src={LogoFooter}
+                alt="Company Logo"
+                className="footer-logo"
+              />
             </Link>
           </div>
-          <p className="footer-description">
-            &copy; {currentYear} All rights reserved.
+          <p className="company-description">
+            Streamline your organization's attendance tracking with our
+            comprehensive management system.
+          </p>
+          <p className="copyright">
+            &copy; {currentYear} Attendance Management System. All rights
+            reserved.
           </p>
         </div>
 
-        <div className="footer-section">
-          <h4>Quick Links</h4>
+        <div className="footer-section links-section">
+          <h4 className="section-title">Quick Links</h4>
           <ul className="footer-links">
             <li>
-              <a href="/">Overview</a>
+              <Link to="/" className="footer-link">
+                Overview
+              </Link>
             </li>
             <li>
-              <a href="/admin">Admin Dashboard</a>
+              <Link to="/admin" className="footer-link">
+                Admin Dashboard
+              </Link>
             </li>
             <li>
-              <a href="/login">Sign In</a>
+              <Link to="/login" className="footer-link">
+                Sign In
+              </Link>
             </li>
             <li>
-              <a href="/register">Sign Up</a>
+              <Link to="/register" className="footer-link">
+                Sign Up
+              </Link>
             </li>
           </ul>
         </div>
 
-        <div className="footer-section">
-          <h4>Connect With Us</h4>
-          <div className="social-icons">
+        <div className="footer-section social-section">
+          <h4 className="section-title">Connect With Us</h4>
+          <div className="social-links">
             <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="social-link"
+              aria-label="GitHub"
             >
-              <FaGithub size={20} />
+              <FaGithub className="social-icon" />
             </a>
             <a
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="social-link"
+              aria-label="Twitter"
             >
-              <FaTwitter size={20} />
+              <FaTwitter className="social-icon" />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="social-link"
+              aria-label="LinkedIn"
             >
-              <FaLinkedin size={20} />
+              <FaLinkedin className="social-icon" />
             </a>
             <a
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="social-link"
+              aria-label="Facebook"
             >
-              <FaFacebook size={20} />
+              <FaFacebook className="social-icon" />
             </a>
           </div>
         </div>
