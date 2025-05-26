@@ -4,6 +4,13 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  FaUserCog,
+  FaCalendarAlt,
+  FaTrash,
+  FaSave,
+  FaEye,
+} from "react-icons/fa";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -140,111 +147,179 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="admin-container">
+    <div className="admin-dashboard-container">
       <div className="admin-dashboard">
-        <h3>Manage Users</h3>
-        {users && (
-          <ul className="user-list">
-            {users.length === 0 ? (
-              <li className="no-records">No users found!</li>
-            ) : (
-              users.map((user) => (
-                <li key={user._id} className="user-item">
-                  <span className="user-name">{user.name}</span>
-                  <span className="user-email">{user.email}</span>
-                  <select
-                    value={user.role}
-                    onChange={(e) => changeUserRole(user._id, e.target.value)}
-                    className="input-select"
-                  >
-                    <option value="employee">Employee</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                  <button
-                    className="btn-delete"
-                    onClick={() => deleteUser(user._id)}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))
+        <section className="dashboard-section">
+          <div className="section-header">
+            <FaUserCog className="section-icon" />
+            <h2>User Management</h2>
+          </div>
+
+          <div className="users-table-container">
+            {users && (
+              <div className="users-table-wrapper">
+                {users.length === 0 ? (
+                  <div className="no-data-message">No users found!</div>
+                ) : (
+                  <table className="users-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user) => (
+                        <tr key={user._id}>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>
+                            <select
+                              value={user.role}
+                              onChange={(e) =>
+                                changeUserRole(user._id, e.target.value)
+                              }
+                              className="role-select"
+                            >
+                              <option value="employee">Employee</option>
+                              <option value="admin">Admin</option>
+                            </select>
+                          </td>
+                          <td>
+                            <button
+                              className="delete-button"
+                              onClick={() => deleteUser(user._id)}
+                              title="Delete User"
+                            >
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
             )}
-          </ul>
-        )}
+          </div>
+        </section>
 
-        <h3>Manage Attendance</h3>
-        <div className="form-group">
-          <select
-            className="input-select"
-            onChange={(e) => {
-              const selectedId = e.target.value;
-              setSelectedUser(selectedId);
+        <section className="dashboard-section">
+          <div className="section-header">
+            <FaCalendarAlt className="section-icon" />
+            <h2>Attendance Management</h2>
+          </div>
 
-              const user = users.find((user) => user._id === selectedId);
-              setSelectedUserName(user ? user.name : "");
+          <div className="attendance-controls">
+            <div className="form-group">
+              <div className="input-group">
+                <label>Select User</label>
+                <select
+                  className="form-select"
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    setSelectedUser(selectedId);
+                    const user = users.find((user) => user._id === selectedId);
+                    setSelectedUserName(user ? user.name : "");
+                    setAttendance([]);
+                    setShowAttendance(false);
+                  }}
+                >
+                  <option value="">Choose a user...</option>
+                  {users.map((user) => (
+                    <option key={user._id} value={user._id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              setAttendance([]);
-              setShowAttendance(false);
-            }}
-          >
-            <option value="">Select User</option>
-            {users.map((user) => (
-              <option key={user._id} value={user._id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
+              <div className="input-group">
+                <label>Select Date</label>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="MMMM d, yyyy"
+                  className="form-select"
+                />
+              </div>
 
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="YYYY MMMM dd"
-            className="input-select"
-          />
+              <div className="input-group">
+                <label>Status</label>
+                <select
+                  className="form-select"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+                  <option value="Leave">Leave</option>
+                </select>
+              </div>
+            </div>
 
-          <select
-            className="input-select"
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="Present">Present</option>
-            <option value="Absent">Absent</option>
-            <option value="Leave">Leave</option>
-          </select>
-        </div>
+            <div className="button-group">
+              <button className="action-button save" onClick={addAttendance}>
+                <FaSave /> Save Attendance
+              </button>
+              <button
+                className="action-button view"
+                onClick={fetchAllAttendance}
+              >
+                <FaEye /> View Records
+              </button>
+            </div>
+          </div>
 
-        <div className="form-group-btn">
-          <button className="btn-fetch" onClick={addAttendance}>
-            Save Attendance
-          </button>
-
-          <button className="btn-fetch" onClick={fetchAllAttendance}>
-            View Attendance
-          </button>
-        </div>
-
-        <h3 className="attendance-heading">
-          All Attendance Records for {selectedUserName || "Selected User"}
-        </h3>
-
-        {showAttendance && (
-          <ul className="attendance-list">
-            {attendance.length === 0 ? (
-              <li className="no-records">No attendance records found!</li>
-            ) : (
-              attendance.map((record) => (
-                <li key={record._id}>
-                  {record.date} - {record.status}{" "}
-                  <button
-                    className="btn-delete"
-                    onClick={() => deleteAttendance(record._id)}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))
-            )}
-          </ul>
-        )}
+          {showAttendance && (
+            <div className="attendance-records">
+              <h3 className="records-title">
+                Attendance Records for {selectedUserName || "Selected User"}
+              </h3>
+              <div className="records-container">
+                {attendance.length === 0 ? (
+                  <div className="no-data-message">
+                    No attendance records found!
+                  </div>
+                ) : (
+                  <table className="attendance-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {attendance.map((record) => (
+                        <tr key={record._id}>
+                          <td>{new Date(record.date).toLocaleDateString()}</td>
+                          <td>
+                            <span
+                              className={`status-badge ${record.status.toLowerCase()}`}
+                            >
+                              {record.status}
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="delete-button"
+                              onClick={() => deleteAttendance(record._id)}
+                              title="Delete Record"
+                            >
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
