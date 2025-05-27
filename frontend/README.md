@@ -1,70 +1,178 @@
-# Getting Started with Create React App
+# Frontend - Online Attendance System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies Used
 
-## Available Scripts
+### Core Dependencies
 
-In the project directory, you can run:
+- **React.js** (v18.3.1): Frontend library for building user interfaces
+- **React DOM** (v18.3.1): React rendering for web applications
+- **React Router DOM** (v7.1.5): Client-side routing
+- **React Scripts** (v5.0.1): Configuration and scripts for Create React App
 
-### `npm start`
+### UI and Styling
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React Icons** (v5.4.0): Icon components library
+- **React Datepicker** (v8.0.0): Date selection component
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Data Management
 
-### `npm test`
+- **Axios** (v1.7.9): HTTP client for API requests
+- **JWT Decode** (v4.0.0): JWT token decoding
+- **Moment** (v2.30.1): Date manipulation library
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Development Tools
 
-### `npm run build`
+- **Web Vitals** (v4.2.4): Performance measurement
+- **ESLint**: Code linting
+- **Create React App**: Project bootstrapping
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+frontend/
+├── public/                 # Static files
+├── src/                    # Source code
+│   ├── assets/            # Images and static assets
+│   │   ├── common/       # Shared components
+│   │   ├── admin/        # Admin-specific components
+│   │   └── employee/     # Employee-specific components
+│   ├── pages/            # Page components
+│   ├── context/          # Context providers
+│   ├── hooks/            # Custom hooks
+│   ├── utils/            # Utility functions
+│   ├── services/         # API services
+│   ├── styles/           # Global styles
+│   ├── App.js            # Root component
+│   └── index.js          # Entry point
+└── package.json          # Dependencies and scripts
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup Instructions
 
-### `npm run eject`
+1. **Installation**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Development**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   Runs the app in development mode at [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+3. **Production Build**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm run build
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   Creates optimized production build in `build` folder
 
-### Code Splitting
+4. **Testing**
+   ```bash
+   npm test
+   ```
+   Runs the test suite in interactive watch mode
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Key Features
 
-### Analyzing the Bundle Size
+### Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- JWT-based authentication
+- Protected routes
+- Role-based access control
 
-### Making a Progressive Web App
+### User Interface
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Responsive design
+- Modern UI components
+- Interactive date picker
+- Toast notifications
 
-### Advanced Configuration
+### Data Management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- API integration with Axios
+- JWT token handling
+- Date formatting with Moment.js
 
-### Deployment
+### Performance
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Code splitting
+- Lazy loading
+- Performance monitoring with Web Vitals
 
-### `npm run build` fails to minify
+## Development Guidelines
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Code Style
+
+- Follow ESLint configuration
+- Use functional components with hooks
+- Implement proper error handling
+- Write meaningful comments
+
+### Best Practices
+
+- Use proper file structure
+- Implement error boundaries
+- Follow React best practices
+- Maintain clean code principles
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Dependencies**
+
+   ```bash
+   # Clear npm cache
+   npm cache clean --force
+
+   # Remove node_modules
+   rm -rf node_modules
+
+   # Reinstall dependencies
+   npm install
+   ```
+
+2. **Build Issues**
+
+   ```bash
+   # Clear build cache
+   rm -rf build
+
+   # Rebuild
+   npm run build
+   ```
+
+## API Integration
+
+The frontend communicates with the backend API running at `http://localhost:5000`. The proxy is configured in `package.json`:
+
+```json
+{
+  "proxy": "http://localhost:5000"
+}
+```
+
+## Browser Support
+
+The application supports:
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Contributing
+
+1. Follow the existing code style
+2. Write meaningful commit messages
+3. Test your changes thoroughly
+4. Update documentation as needed
+
+## License
+
+This project is licensed under the MIT License.
