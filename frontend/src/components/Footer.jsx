@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 import { FaGithub, FaTwitter, FaLinkedin, FaFacebook } from "react-icons/fa";
 import "./Footer.css";
 
+/**
+ * Footer Component
+ * Displays the application footer with branding, navigation links, and social media connections
+ * @returns {JSX.Element} Footer section
+ */
 const Footer = () => {
+  // Get current year for copyright notice
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="footer">
       <div className="footer-container">
+        {/* Brand section with logo and description */}
         <div className="footer-section brand-section">
           <div className="logo-container">
             <Link to="/" className="logo-link">
@@ -29,6 +36,7 @@ const Footer = () => {
           </p>
         </div>
 
+        {/* Quick links section */}
         <div className="footer-section links-section">
           <h4 className="section-title">Quick Links</h4>
           <ul className="footer-links">
@@ -55,9 +63,11 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Social media section */}
         <div className="footer-section social-section">
           <h4 className="section-title">Connect With Us</h4>
           <div className="social-links">
+            {/* GitHub link */}
             <a
               href="https://github.com"
               target="_blank"
@@ -67,6 +77,7 @@ const Footer = () => {
             >
               <FaGithub className="social-icon" />
             </a>
+            {/* Twitter link */}
             <a
               href="https://twitter.com"
               target="_blank"
@@ -76,6 +87,7 @@ const Footer = () => {
             >
               <FaTwitter className="social-icon" />
             </a>
+            {/* LinkedIn link */}
             <a
               href="https://linkedin.com"
               target="_blank"
@@ -85,6 +97,7 @@ const Footer = () => {
             >
               <FaLinkedin className="social-icon" />
             </a>
+            {/* Facebook link */}
             <a
               href="https://facebook.com"
               target="_blank"

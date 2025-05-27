@@ -5,7 +5,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import "./Register.css";
 
+/**
+ * Register Component
+ * Handles user registration with form validation and role selection
+ * @returns {JSX.Element} Registration form and interface
+ */
 const Register = () => {
+  // State management for form inputs and UI
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,11 +20,17 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  /**
+   * Handle registration form submission
+   * Creates new user account and manages registration state
+   * @param {Event} event - Form submission event
+   */
   const handleRegister = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
+      // Send registration request to backend
       await axios.post("http://localhost:5000/api/auth/register", {
         name,
         email,
@@ -26,6 +38,7 @@ const Register = () => {
         role,
       });
       alert("Registration Successful!");
+      // Redirect to login page after successful registration
       navigate("/login");
     } catch (error) {
       alert("Registration Failed: " + error.response.data.message);
@@ -37,13 +50,16 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-wrapper">
+        {/* Registration header section */}
         <div className="register-header">
           <h2>Create Account</h2>
           <p>Join us and start managing your attendance</p>
         </div>
 
+        {/* Registration form */}
         <form onSubmit={handleRegister} className="register-form">
           <div className="input-group">
+            {/* Full name input field */}
             <div className="input-box">
               <input
                 type="text"
@@ -54,6 +70,7 @@ const Register = () => {
               />
             </div>
 
+            {/* Email input field */}
             <div className="input-box">
               <input
                 type="email"
@@ -64,6 +81,7 @@ const Register = () => {
               />
             </div>
 
+            {/* Password input field with toggle visibility */}
             <div className="input-box">
               <input
                 type={showPassword ? "text" : "password"}
@@ -81,6 +99,7 @@ const Register = () => {
               </button>
             </div>
 
+            {/* Role selection dropdown */}
             <div className="role-select">
               <select
                 value={role}
@@ -93,6 +112,7 @@ const Register = () => {
             </div>
           </div>
 
+          {/* Submit button with loading state */}
           <button
             type="submit"
             className="register-button"
@@ -108,6 +128,7 @@ const Register = () => {
             )}
           </button>
 
+          {/* Login link for existing users */}
           <div className="login-link">
             <p>
               Already have an account?{" "}

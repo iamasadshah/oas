@@ -13,7 +13,13 @@ import {
 } from "react-icons/fa";
 import "./AdminDashboard.css";
 
+/**
+ * AdminDashboard Component
+ * Provides user and attendance management functionality for administrators
+ * @returns {JSX.Element} Admin dashboard interface
+ */
 const AdminDashboard = () => {
+  // State management for users and attendance
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedUserName, setSelectedUserName] = useState("");
@@ -23,6 +29,7 @@ const AdminDashboard = () => {
   const [showAttendance, setShowAttendance] = useState(false);
   const navigate = useNavigate();
 
+  // Effect to check authentication and admin role on component mount
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -39,6 +46,9 @@ const AdminDashboard = () => {
     fetchUsers();
   }, [navigate]);
 
+  /**
+   * Fetch all users from the backend
+   */
   const fetchUsers = () => {
     axios
       .get("http://localhost:5000/api/admin/users", {
@@ -48,6 +58,10 @@ const AdminDashboard = () => {
       .catch((err) => console.error("Error fetching users:", err));
   };
 
+  /**
+   * Delete a user and their attendance records
+   * @param {string} userId - ID of the user to delete
+   */
   const deleteUser = async (userId) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -63,6 +77,11 @@ const AdminDashboard = () => {
     }
   };
 
+  /**
+   * Update a user's role
+   * @param {string} userId - ID of the user to update
+   * @param {string} newRole - New role to assign
+   */
   const changeUserRole = async (userId, newRole) => {
     try {
       await axios.put(
@@ -80,6 +99,9 @@ const AdminDashboard = () => {
     }
   };
 
+  /**
+   * Fetch attendance records for selected user and date
+   */
   const fetchAttendance = () => {
     axios
       .get("http://localhost:5000/api/admin/attendance", {
@@ -92,6 +114,9 @@ const AdminDashboard = () => {
       .then(({ data }) => setAttendance(data));
   };
 
+  /**
+   * Add new attendance record
+   */
   const addAttendance = async () => {
     try {
       await axios.post(
@@ -116,6 +141,9 @@ const AdminDashboard = () => {
     }
   };
 
+  /**
+   * Fetch all attendance records for selected user
+   */
   const fetchAllAttendance = () => {
     axios
       .get("http://localhost:5000/api/admin/attendance/all", {
@@ -132,6 +160,10 @@ const AdminDashboard = () => {
       });
   };
 
+  /**
+   * Delete an attendance record
+   * @param {string} id - ID of the attendance record to delete
+   */
   const deleteAttendance = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/admin/attendance/${id}`, {
@@ -149,6 +181,7 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard-container">
       <div className="admin-dashboard">
+        {/* User Management Section */}
         <section className="dashboard-section">
           <div className="section-header">
             <FaUserCog className="section-icon" />
@@ -206,6 +239,7 @@ const AdminDashboard = () => {
           </div>
         </section>
 
+        {/* Attendance Management Section */}
         <section className="dashboard-section">
           <div className="section-header">
             <FaCalendarAlt className="section-icon" />
@@ -213,6 +247,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className="attendance-controls">
+            {/* User selection */}
             <div className="form-group">
               <div className="input-group">
                 <label>Select User</label>
@@ -236,6 +271,7 @@ const AdminDashboard = () => {
                 </select>
               </div>
 
+              {/* Date selection */}
               <div className="input-group">
                 <label>Select Date</label>
                 <DatePicker
@@ -246,11 +282,13 @@ const AdminDashboard = () => {
                 />
               </div>
 
+              {/* Status selection */}
               <div className="input-group">
                 <label>Status</label>
                 <select
-                  className="form-select"
+                  value={status}
                   onChange={(e) => setStatus(e.target.value)}
+                  className="form-select"
                 >
                   <option value="Present">Present</option>
                   <option value="Absent">Absent</option>
@@ -259,63 +297,58 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <div className="button-group">
-              <button className="action-button save" onClick={addAttendance}>
-                <FaSave /> Save Attendance
+            {/* Action buttons */}
+            <div className="action-buttons">
+              <button
+                className="action-button save"
+                onClick={addAttendance}
+                disabled={!selectedUser}
+              >
+                <FaSave className="button-icon" />
+                Save Attendance
               </button>
               <button
                 className="action-button view"
                 onClick={fetchAllAttendance}
+                disabled={!selectedUser}
               >
-                <FaEye /> View Records
+                <FaEye className="button-icon" />
+                View All Records
               </button>
             </div>
           </div>
 
+          {/* Attendance records display */}
           {showAttendance && (
             <div className="attendance-records">
-              <h3 className="records-title">
-                Attendance Records for {selectedUserName || "Selected User"}
-              </h3>
-              <div className="records-container">
-                {attendance.length === 0 ? (
-                  <div className="no-data-message">
-                    No attendance records found!
-                  </div>
-                ) : (
-                  <table className="attendance-table">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+              <h3>Attendance Records for {selectedUserName}</h3>
+              <div className="records-table-container">
+                <table className="records-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attendance.map((record) => (
+                      <tr key={record._id}>
+                        <td>{new Date(record.date).toLocaleDateString()}</td>
+                        <td>{record.status}</td>
+                        <td>
+                          <button
+                            className="delete-button"
+                            onClick={() => deleteAttendance(record._id)}
+                            title="Delete Record"
+                          >
+                            <FaTrash />
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {attendance.map((record) => (
-                        <tr key={record._id}>
-                          <td>{new Date(record.date).toLocaleDateString()}</td>
-                          <td>
-                            <span
-                              className={`status-badge ${record.status.toLowerCase()}`}
-                            >
-                              {record.status}
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="delete-button"
-                              onClick={() => deleteAttendance(record._id)}
-                              title="Delete Record"
-                            >
-                              <FaTrash />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}

@@ -6,7 +6,13 @@ import moment from "moment";
 import { FaCalendarAlt, FaUser, FaEnvelope, FaChartBar } from "react-icons/fa";
 import "./Overview.css";
 
+/**
+ * Overview Component
+ * Displays user's attendance overview with summary statistics and daily records
+ * @returns {JSX.Element} Overview dashboard
+ */
 function Overview() {
+  // State management for attendance data and UI
   const [summary, setSummary] = useState({});
   const [attendanceDetails, setAttendanceDetails] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
@@ -14,6 +20,7 @@ function Overview() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Effect to fetch attendance data on component mount and filter changes
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -22,6 +29,10 @@ function Overview() {
       return;
     }
 
+    /**
+     * Fetch attendance summary for the selected period
+     * @param {string} userId - User's unique identifier
+     */
     const fetchAttendanceSummary = (userId) => {
       setLoading(true);
       axios
@@ -39,6 +50,10 @@ function Overview() {
         });
     };
 
+    /**
+     * Fetch daily attendance records for the selected period
+     * @param {string} userId - User's unique identifier
+     */
     const fetchDailyAttendance = (userId) => {
       setLoading(true);
       axios
@@ -68,6 +83,10 @@ function Overview() {
     }
   }, [selectedMonth, selectedYear, navigate]);
 
+  /**
+   * Generate array of all days in the selected month with attendance status
+   * @returns {Array} Array of day objects with date and status
+   */
   const getAllDaysOfMonth = () => {
     const daysInMonth = moment(
       `${selectedYear}-${selectedMonth}`,
@@ -85,6 +104,11 @@ function Overview() {
     });
   };
 
+  /**
+   * Get CSS class name based on attendance status
+   * @param {string} status - Attendance status
+   * @returns {string} CSS class name
+   */
   const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
       case "present":
@@ -100,9 +124,11 @@ function Overview() {
 
   return (
     <div className="overview-container">
+      {/* Header section with filters */}
       <div className="overview-header">
         <h2>Attendance Overview</h2>
         <div className="filter-container">
+          {/* Year filter */}
           <div className="filter-group">
             <label>Year</label>
             <div className="filter-select-container">
@@ -120,6 +146,7 @@ function Overview() {
             </div>
           </div>
 
+          {/* Month filter */}
           <div className="filter-group">
             <label>Month</label>
             <div className="filter-select-container">
@@ -142,6 +169,7 @@ function Overview() {
         </div>
       </div>
 
+      {/* Loading state */}
       {loading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
@@ -149,7 +177,9 @@ function Overview() {
         </div>
       ) : (
         <>
+          {/* Summary cards section */}
           <div className="summary-section">
+            {/* User information card */}
             <div className="summary-card">
               <div className="summary-header">
                 <FaUser className="summary-icon" />
@@ -165,6 +195,7 @@ function Overview() {
               </div>
             </div>
 
+            {/* Period information card */}
             <div className="summary-card">
               <div className="summary-header">
                 <FaCalendarAlt className="summary-icon" />
@@ -181,6 +212,7 @@ function Overview() {
               </div>
             </div>
 
+            {/* Attendance summary card */}
             <div className="summary-card">
               <div className="summary-header">
                 <FaChartBar className="summary-icon" />
@@ -200,6 +232,7 @@ function Overview() {
             </div>
           </div>
 
+          {/* Daily attendance records section */}
           <div className="attendance-details-section">
             <h3>Daily Attendance Records</h3>
             <div className="attendance-table-container">
