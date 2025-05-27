@@ -1,13 +1,13 @@
-# Online Attendance System - MERN Stack
+# Online Attendance System
 
 ## Final Year Project
 
 <div align="center">
-  <img src="nonRelatedAssets/preview.png" alt="Project Logo" width="200"/>
+  <img src="nonRelatedAssets/preview.png" alt="Project Logo" width="400" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;"/>
   
-  <p>A modern, efficient, and user-friendly attendance management system built with the MERN stack.</p>
+  <p style="font-size: 1.2em; color: #333; margin: 20px 0;">A modern, efficient, and user-friendly attendance management system built with the MERN stack.</p>
 
-  <div>
+  <div style="margin: 25px 0;">
     <img src="https://img.shields.io/badge/React%20JS-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black" alt="reactdotjs" />
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black" alt="javascript" />
     <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="nojedotjs" />
