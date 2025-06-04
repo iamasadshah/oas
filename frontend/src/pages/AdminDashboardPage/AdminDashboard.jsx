@@ -181,64 +181,6 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard-container">
       <div className="admin-dashboard">
-        {/* User Management Section */}
-        <section className="dashboard-section">
-          <div className="section-header">
-            <FaUserCog className="section-icon" />
-            <h2>User Management</h2>
-          </div>
-
-          <div className="users-table-container">
-            {users && (
-              <div className="users-table-wrapper">
-                {users.length === 0 ? (
-                  <div className="no-data-message">No users found!</div>
-                ) : (
-                  <table className="users-table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {users.map((user) => (
-                        <tr key={user._id}>
-                          <td>{user.name}</td>
-                          <td>{user.email}</td>
-                          <td>
-                            <select
-                              value={user.role}
-                              onChange={(e) =>
-                                changeUserRole(user._id, e.target.value)
-                              }
-                              className="role-select"
-                            >
-                              <option value="employee">Employee</option>
-                              <option value="admin">Admin</option>
-                            </select>
-                          </td>
-                          <td>
-                            <button
-                              className="delete-button"
-                              onClick={() => deleteUser(user._id)}
-                              title="Delete User"
-                            >
-                              <FaTrash />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-
         {/* Attendance Management Section */}
         <section className="dashboard-section">
           <div className="section-header">
@@ -321,37 +263,159 @@ const AdminDashboard = () => {
           {/* Attendance records display */}
           {showAttendance && (
             <div className="attendance-records">
-              <h3>Attendance Records for {selectedUserName}</h3>
+              <div className="records-header">
+                <h3>Attendance Records for {selectedUserName}</h3>
+                <div className="records-summary">
+                  <div className="summary-item">
+                    <span className="summary-label">Total Records:</span>
+                    <span className="summary-value">{attendance.length}</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Present Days:</span>
+                    <span className="summary-value">
+                      {
+                        attendance.filter(
+                          (record) => record.status === "Present"
+                        ).length
+                      }
+                    </span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Absent Days:</span>
+                    <span className="summary-value">
+                      {
+                        attendance.filter(
+                          (record) => record.status === "Absent"
+                        ).length
+                      }
+                    </span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Leave Days:</span>
+                    <span className="summary-value">
+                      {
+                        attendance.filter((record) => record.status === "Leave")
+                          .length
+                      }
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div className="records-table-container">
-                <table className="records-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {attendance.map((record) => (
-                      <tr key={record._id}>
-                        <td>{new Date(record.date).toLocaleDateString()}</td>
-                        <td>{record.status}</td>
-                        <td>
-                          <button
-                            className="delete-button"
-                            onClick={() => deleteAttendance(record._id)}
-                            title="Delete Record"
+                {attendance.length === 0 ? (
+                  <div className="no-records-message">
+                    <p>No attendance records found for this user.</p>
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="records-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {attendance.map((record) => (
+                          <tr
+                            key={record._id}
+                            className={`status-${record.status.toLowerCase()}`}
                           >
-                            <FaTrash />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <td>
+                              {new Date(record.date).toLocaleDateString(
+                                "en-US",
+                                {
+                                  weekday: "long",
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
+                            </td>
+                            <td>
+                              <span
+                                className={`status-badge ${record.status.toLowerCase()}`}
+                              >
+                                {record.status}
+                              </span>
+                            </td>
+                            <td>
+                              <button
+                                className="delete-button"
+                                onClick={() => deleteAttendance(record._id)}
+                                title="Delete Record"
+                              >
+                                <FaTrash />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           )}
+        </section>
+
+        {/* User Management Section */}
+        <section className="dashboard-section">
+          <div className="section-header">
+            <FaUserCog className="section-icon" />
+            <h2>User Management</h2>
+          </div>
+
+          <div className="users-table-container">
+            {users && (
+              <div className="users-table-wrapper">
+                {users.length === 0 ? (
+                  <div className="no-data-message">No users found!</div>
+                ) : (
+                  <table className="users-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user) => (
+                        <tr key={user._id}>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>
+                            <select
+                              value={user.role}
+                              onChange={(e) =>
+                                changeUserRole(user._id, e.target.value)
+                              }
+                              className="role-select"
+                            >
+                              <option value="employee">Employee</option>
+                              <option value="admin">Admin</option>
+                            </select>
+                          </td>
+                          <td>
+                            <button
+                              className="delete-button"
+                              onClick={() => deleteUser(user._id)}
+                              title="Delete User"
+                            >
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+          </div>
         </section>
       </div>
     </div>

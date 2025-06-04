@@ -399,6 +399,165 @@ h3 {
   margin-bottom: 1rem;
 }
 
+/* Attendance Records Styles */
+.attendance-records {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.records-header {
+  margin-bottom: 1.5rem;
+}
+
+.records-header h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.records-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summary-item:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(74, 144, 226, 0.3);
+}
+
+.summary-label {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 1rem;
+}
+
+.records-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #4a90e2;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+.records-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.records-table tr:hover td {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.records-table tr:last-child td {
+  border-bottom: none;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.status-present {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.status-absent {
+  background: rgba(255, 59, 48, 0.2);
+  color: #ff3b30;
+  border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.status-leave {
+  background: rgba(255, 159, 10, 0.2);
+  color: #ff9f0a;
+  border: 1px solid rgba(255, 159, 10, 0.3);
+}
+
+.delete-button {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  color: #ff3b30;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button:hover {
+  background: rgba(255, 59, 48, 0.2);
+  transform: translateY(-1px);
+  border-color: rgba(255, 59, 48, 0.3);
+}
+
+.no-records-message {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .admin-dashboard-container {
@@ -454,6 +613,21 @@ h3 {
     padding: 0.875rem 1rem;
     font-size: 0.95rem;
   }
+
+  .records-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .records-table th,
+  .records-table td {
+    padding: 0.75rem;
+  }
+
+  .status-badge {
+    padding: 0.35rem 0.75rem;
+    min-width: 80px;
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -503,5 +677,30 @@ h3 {
 
   .button-icon {
     font-size: 1rem;
+  }
+
+  .records-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .records-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .summary-value {
+    font-size: 1.25rem;
+  }
+
+  .records-table th {
+    font-size: 0.8rem;
+  }
+
+  .records-table td {
+    font-size: 0.85rem;
+  }
+
+  .status-badge {
+    min-width: 70px;
+    padding: 0.25rem 0.5rem;
   }
 }
